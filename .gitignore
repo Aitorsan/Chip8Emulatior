@@ -1,0 +1,10 @@
+.vs/
+*.vcxproj
+*.sln
+*.filters
+x64/
+Debug/
+.localhistory/
+*.user
+*.userprefs
+Rooms/
