@@ -112,17 +112,18 @@ bool Chip8::loadGameInMemory(const char* fileName)
 
  void Chip8::AskForRoom()
  {
-	 //std::cout << "Introduce room file path\n>";
-	 std::string room = "Rooms/pong2.c8";
-	 //std::getline(std::cin, room);
-	 loadGameInMemory(room.c_str());
+	 std::cout << "Introduce room: \n>";
+	 std::string folder = "Rooms/";
+	 std::string room;
+	 std::getline(std::cin, room);
+	 folder += room;
+	 loadGameInMemory(folder.c_str());
  }
 
  void Chip8::DoCycle(float fElapsedTime)
  {
 	 //Fetch
 	 unsigned short raw_instruction = Fetch();
-	 
 	 //Decode
      Instruction operation = Decode(raw_instruction);
 	 //Execute instruction
@@ -215,7 +216,6 @@ bool Chip8::loadGameInMemory(const char* fileName)
  //Dxyk  
  void Chip8::OpDraw(unsigned short opcode)
  {
-
 	 unsigned short x = cV[(opcode & 0x0F00) >> 8];
 	 unsigned short y = cV[(opcode & 0x00F0) >> 4];
 	 unsigned short n = (opcode & 0x000F);
@@ -443,13 +443,13 @@ bool Chip8::loadGameInMemory(const char* fileName)
  void Chip8::OpLoadOperations(unsigned short opcode)
  {
 	 unsigned short x = (opcode & 0x0F00) >> 8;
-	 unsigned short op = opcode& 0x00FF;
-	 switch (opcode & 0x00FF)
+	 unsigned short kk = opcode& 0x00FF;
+	 switch (kk)
 	 {
-	 case 0x7:
+	 case 0x07:
 		 cV[x] = ucDelay_timer; 
 		 break;
-	 case 0xA:
+	 case 0x0A:
 	 {
 		 // wait for key pressed,store the value of the key in Vx
 		 bool pressed = false;
